@@ -39,6 +39,7 @@ public class SimpleGameWorld implements GameWorld {
 	public void render() {
 		drawStatic();
 		drawDynamic();
+		drawGrid();
 	}
 
 	// ///////////////////////////////////////////////////////
@@ -64,7 +65,6 @@ public class SimpleGameWorld implements GameWorld {
 		h = game.getGraphics().getHeight();
 		grid = new SpatialGrid(w, h, 6);
 
-		drawGrid();
 	}
 
 	private void addUnit(Side side) {
