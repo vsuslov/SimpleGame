@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ru.rs</groupId>
+        <artifactId>General.Android</artifactId>
+        <version>0.0.1</version>
+    </parent>
+
+    <artifactId>SimpleGame</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+
+    <packaging>apk</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>ru.rs</groupId>
+            <artifactId>G.A.F</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.rs</groupId>
+            <artifactId>G.A.G</artifactId>
+            <version>0.0.3-SNAPSHOT</version>
+        </dependency>
+        <!--dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring</artifactId>
+            <version>2.5.6</version>
+            </dependency -->
+    </dependencies>
+
+    <properties>
+        <!-- для деплоя на девайс раскоментить usb и закомментить нейм -->
+        <emulator.name>usb</emulator.name>
+        <!--emulator.name>rr</emulator.name -->
+        <!--sdk.path>/Users/dns/Documents/androidSDK/</sdk.path -->
+    </properties>
+</project>
