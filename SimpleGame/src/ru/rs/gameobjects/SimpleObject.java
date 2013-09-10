@@ -3,6 +3,7 @@ package ru.rs.gameobjects;
 import ru.rs.GameObject;
 import ru.rs.Renderable;
 import ru.rs.interfaces.Game;
+import ru.rs.objects.math.Rectangle;
 import ru.rs.objects.math.Vector;
 import android.graphics.Bitmap;
 
@@ -30,8 +31,12 @@ public abstract class SimpleObject extends GameObject implements Renderable {
 		float y = 1;
 
 		position = new Vector(x, y);
+		int w = image.getWidth();
+		int h = image.getHeight();
+		bounds = new Rectangle(x - w / 2, y - h / 2, w, h);
 	}
 
+	@Override
 	public void render() {
 		game.getGraphics()
 				.drawBitmap(
@@ -42,4 +47,8 @@ public abstract class SimpleObject extends GameObject implements Renderable {
 	}
 
 	protected abstract void setImage();
+
+	public Vector getPosition() {
+		return position.cpy();
+	}
 }
