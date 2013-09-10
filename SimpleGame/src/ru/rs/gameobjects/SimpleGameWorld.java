@@ -3,6 +3,7 @@ package ru.rs.gameobjects;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.rs.GameObject;
 import ru.rs.GameWorld;
 import ru.rs.Renderable;
 import ru.rs.SpatialGrid;
@@ -20,6 +21,9 @@ public class SimpleGameWorld implements GameWorld {
 	private List<Updateable> dynamicObjects;
 	private Game game;
 	private SpatialGrid grid;
+
+	// Test
+	List<GameObject> list;
 
 	public SimpleGameWorld(Game game) {
 		this.game = game;
@@ -46,6 +50,14 @@ public class SimpleGameWorld implements GameWorld {
 		drawStatic();
 		drawDynamic();
 		drawGrid();
+		if (dynamicObjects.size() > 0) {
+			list = grid.getPotentialColliders((GameObject) dynamicObjects
+					.get(0));
+
+			game.getGraphics().drawText(String.valueOf(list.size()),
+					new Vector(100, 20), Color.RED);
+		}
+
 	}
 
 	// ///////////////////////////////////////////////////////
@@ -80,7 +92,7 @@ public class SimpleGameWorld implements GameWorld {
 
 	private void addUnit(Side side) {
 		Unit unit = new Unit(side, game);
-//		grid.insertObject(unit);
+		grid.insertObject(unit);
 		dynamicObjects.add(unit);
 	}
 
