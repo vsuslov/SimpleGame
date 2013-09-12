@@ -21,12 +21,14 @@ public class SimpleGameWorld implements GameWorld {
 	private List<Updateable> dynamicObjects;
 	private Game game;
 	private SpatialGrid grid;
+	private Graphics graphics;
 
 	// Test
 	List<GameObject> list;
 
 	public SimpleGameWorld(Game game) {
 		this.game = game;
+		graphics = game.getGraphics();
 		init();
 		Castle allyCastle = new Castle(Side.ALLY, this.game);
 		Castle enemyCastle = new Castle(Side.ENEMY, this.game);
@@ -65,16 +67,23 @@ public class SimpleGameWorld implements GameWorld {
 	private void drawStatic() {
 		for (Renderable object : staticObjects) {
 			object.render();
-			Graphics g = game.getGraphics();
-			SimpleObject simple = (SimpleObject) object;
+			// Graphics g = game.getGraphics();
+			// SimpleObject simple = (SimpleObject) object;
 
-			g.drawText(String.valueOf(grid.getCellIds(simple)[0]), new Vector(
-					simple.getPosition().x, 20), Color.YELLOW);
+			// g.drawText(String.valueOf(grid.getCellIds(simple)[0]), new
+			// Vector(
+			// simple.getPosition().x, 20), Color.YELLOW);
 		}
 	}
 
 	private void drawDynamic() {
 		for (Updateable unit : dynamicObjects) {
+			SimpleObject simple = (SimpleObject) unit;
+			int[] imas = grid.getCellIds((SimpleObject) unit);
+			String stat = String.valueOf(imas[0]);
+			Vector pos = simple.getPosition();
+			pos.y = graphics.getHeight() - (pos.y + simple.height + 2);
+			graphics.drawText(stat, pos, Color.GREEN);
 			unit.render();
 		}
 	}

@@ -31,8 +31,10 @@ public abstract class SimpleObject extends GameObject implements Renderable {
 		float y = 1;
 
 		position = new Vector(x, y);
-		int w = image.getWidth();
-		int h = image.getHeight();
+		float w = image.getWidth();
+		float h = image.getHeight();
+		this.width = w;
+		this.height = h;
 		bounds = new Rectangle(x - w / 2, y - h / 2, w, h);
 	}
 
