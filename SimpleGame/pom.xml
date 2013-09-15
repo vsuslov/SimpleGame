@@ -5,11 +5,10 @@
     <parent>
         <groupId>ru.rs</groupId>
         <artifactId>General.Android</artifactId>
-        <version>1.0</version>
+        <version>1.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>SimpleGame</artifactId>
-    <version>1.1-SNAPSHOT</version>
 
     <packaging>apk</packaging>
 
@@ -17,12 +16,12 @@
         <dependency>
             <groupId>ru.rs</groupId>
             <artifactId>G.A.F</artifactId>
-            <version>1.0</version>
+            <version>1.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>ru.rs</groupId>
             <artifactId>G.A.G</artifactId>
-            <version>1.0</version>
+            <version>1.1-SNAPSHOT</version>
         </dependency>
         <!--dependency>
             <groupId>org.springframework</groupId>
