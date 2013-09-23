@@ -45,7 +45,7 @@ public class CollisionScreen extends Screen {
 	@Override
 	public void render(float delta) {
 		graphics.clear(Color.BLACK);
-		graphics.drawText(Float.toString(delta), graphics.getWidth() - 15, 15,
+		graphics.drawText(Float.toString(delta), graphics.getWidth() - 30, 15,
 				Color.BLUE);
 		gameWorld.render();
 	}
