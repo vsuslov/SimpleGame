@@ -5,6 +5,7 @@ import ru.rs.Renderable;
 import ru.rs.interfaces.Game;
 import ru.rs.objects.math.Vector;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 
 public abstract class SimpleObject extends GameObject implements Renderable {
 
@@ -47,10 +48,9 @@ public abstract class SimpleObject extends GameObject implements Renderable {
 	public void render() {
 
 		game.getGraphics().drawBitmap(image, getRenderPosition(position));
-		// Vector lowerLeft = getBounds().lowerLeft;
-		// game.getGraphics().drawRect(getRenderPosition(lowerLeft),
-		// bounds.width,
-		// bounds.height, Color.GREEN);
+		Vector lowerLeft = getBounds().lowerLeft;
+		game.getGraphics().drawRect(getRenderPosition(lowerLeft),
+				getBounds().width, getBounds().height, Color.GREEN);
 	}
 
 	protected abstract void setImage();

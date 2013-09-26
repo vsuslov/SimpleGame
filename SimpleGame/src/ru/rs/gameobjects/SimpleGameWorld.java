@@ -36,6 +36,7 @@ public class SimpleGameWorld implements GameWorld {
 		grid.insertObject(enemyCastle);
 		staticObjects.add(allyCastle);
 		staticObjects.add(enemyCastle);
+		addAllyUnit();
 	}
 
 	// ///////////////////////////////////////////////////////
@@ -80,11 +81,14 @@ public class SimpleGameWorld implements GameWorld {
 		for (Updateable unit : dynamicObjects) {
 			//
 			SimpleObject simple = (SimpleObject) unit;
-			int[] imas = grid.getCellIds((SimpleObject) unit);
+			int[] imas = grid.getCellIds(simple);
 			String stat = String.valueOf(imas[0]);
 			Vector pos = simple.getPosition();
 			pos.y = graphics.getHeight() - (pos.y + simple.height + 2);
 			graphics.drawText(stat, pos, Color.GREEN);
+			stat = String.valueOf(imas[1]);
+			pos.x = pos.x + simple.width;
+			graphics.drawText(stat, pos, Color.YELLOW);
 			//
 
 			unit.render();
