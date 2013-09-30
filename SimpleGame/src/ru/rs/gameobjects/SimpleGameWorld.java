@@ -3,7 +3,6 @@ package ru.rs.gameobjects;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.rs.DynamicGameObject;
 import ru.rs.GameObject;
 import ru.rs.GameWorld;
 import ru.rs.Renderable;
@@ -12,21 +11,17 @@ import ru.rs.Updateable;
 import ru.rs.interfaces.Game;
 import ru.rs.interfaces.Graphics;
 import ru.rs.objects.math.Vector;
-import ru.rs.utils.math.FigureUtils;
 import android.graphics.Color;
 //считаю, нужно объектную модель(человечки, здания) 
 //засовывать в грид и оттуда их прорисовывать, а не в гейм ворлде.
 
 public class SimpleGameWorld implements GameWorld {
 
-	private List<Renderable> staticObjects;
-	private List<Updateable> dynamicObjects;
+	private List<Castle> staticObjects;
+	private List<DynamicObject> dynamicObjects;
 	private Game game;
 	private SpatialGrid grid;
 	private Graphics graphics;
-
-	// Test
-	List<GameObject> list;
 
 	public SimpleGameWorld(Game game) {
 		this.game = game;
@@ -38,35 +33,17 @@ public class SimpleGameWorld implements GameWorld {
 		grid.insertObject(enemyCastle);
 		staticObjects.add(allyCastle);
 		staticObjects.add(enemyCastle);
-		addAllyUnit();
+		// addAllyUnit();
 	}
 
 	// ///////////////////////////////////////////////////////
 
 	@Override
 	public void update() {
-		for (Updateable unit : dynamicObjects) {
-			unit.update();
-		}
 		if (dynamicObjects.size() > 0) {
-			for (Updateable object : dynamicObjects) {
-				GameObject obj = (SimpleObject) object;
-				list = grid.getPotentialColliders(obj);
-				for (GameObject collider : list) {
-					if (FigureUtils.overlap(obj.getBounds(),
-							collider.getBounds())) {
-						if (collider != null
-								&& !((SimpleObject) collider).side
-										.equals(((SimpleObject) obj).side)) {
-							grid.removeObject(collider);
-							if (collider instanceof DynamicGameObject)
-								dynamicObjects.remove(collider);
-							else
-								staticObjects.remove(collider);
-						}
+			for (DynamicObject unit : dynamicObjects) {
+				unit.update();
 
-					}
-				}
 			}
 		}
 
@@ -77,14 +54,6 @@ public class SimpleGameWorld implements GameWorld {
 		drawStatic();
 		drawDynamic();
 		drawGrid();
-		if (dynamicObjects.size() > 0) {
-			list = grid.getPotentialColliders((GameObject) dynamicObjects
-					.get(0));
-
-			game.getGraphics().drawText(String.valueOf(list.size()),
-					new Vector(100, 20), Color.RED);
-		}
-
 	}
 
 	// ///////////////////////////////////////////////////////
@@ -92,36 +61,18 @@ public class SimpleGameWorld implements GameWorld {
 	private void drawStatic() {
 		for (Renderable object : staticObjects) {
 			object.render();
-			// Graphics g = game.getGraphics();
-			// SimpleObject simple = (SimpleObject) object;
-
-			// g.drawText(String.valueOf(grid.getCellIds(simple)[0]), new
-			// Vector(
-			// simple.getPosition().x, 20), Color.YELLOW);
 		}
 	}
 
 	private void drawDynamic() {
 		for (Updateable unit : dynamicObjects) {
-			//
-			SimpleObject simple = (SimpleObject) unit;
-			int[] imas = grid.getCellIds(simple);
-			String stat = String.valueOf(imas[0]);
-			Vector pos = simple.getPosition();
-			pos.y = graphics.getHeight() - (pos.y + simple.height + 2);
-			graphics.drawText(stat, pos, Color.GREEN);
-			stat = String.valueOf(imas[1]);
-			pos.x = pos.x + simple.width;
-			graphics.drawText(stat, pos, Color.YELLOW);
-			//
-
 			unit.render();
 		}
 	}
 
 	private void init() {
-		staticObjects = new ArrayList<Renderable>();
-		dynamicObjects = new ArrayList<Updateable>();
+		staticObjects = new ArrayList<Castle>();
+		dynamicObjects = new ArrayList<DynamicObject>();
 
 		float w, h;
 		w = game.getGraphics().getWidth();
@@ -165,6 +116,15 @@ public class SimpleGameWorld implements GameWorld {
 			float lineX = i * dW;
 			graphic.drawLine(new Vector(lineX, 0),
 					new Vector(lineX, graphic.getHeight()), Color.BLUE);
+		}
+	}
+
+	private void deleteObject(GameObject object) {
+		grid.removeObject(object);
+		if (object instanceof DynamicObject) {
+			dynamicObjects.remove(object);
+		} else {
+			staticObjects.remove(object);
 		}
 	}
 }
