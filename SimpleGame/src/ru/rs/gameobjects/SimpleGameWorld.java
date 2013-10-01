@@ -6,11 +6,11 @@ import java.util.List;
 import ru.rs.GameObject;
 import ru.rs.GameWorld;
 import ru.rs.Renderable;
-import ru.rs.SpatialGrid;
 import ru.rs.Updateable;
 import ru.rs.interfaces.Game;
 import ru.rs.interfaces.Graphics;
 import ru.rs.objects.math.Vector;
+import ru.rs.utils.math.FigureUtils;
 import android.graphics.Color;
 //считаю, нужно объектную модель(человечки, здания) 
 //засовывать в грид и оттуда их прорисовывать, а не в гейм ворлде.
@@ -43,7 +43,18 @@ public class SimpleGameWorld implements GameWorld {
 		if (dynamicObjects.size() > 0) {
 			for (DynamicObject unit : dynamicObjects) {
 				unit.update();
-
+				List<GameObject> list = grid.getPotentialColliders(unit);
+				for (GameObject collider : list) {
+					if (FigureUtils.overlap(unit.getBounds(),
+							collider.getBounds())) {
+						if (collider != null
+								&& !unit.side
+										.equals(((SimpleObject) collider).side)) {
+							removeObject(collider);
+							// removeObject(unit);
+						}
+					}
+				}
 			}
 		}
 
@@ -54,6 +65,7 @@ public class SimpleGameWorld implements GameWorld {
 		drawStatic();
 		drawDynamic();
 		drawGrid();
+
 	}
 
 	// ///////////////////////////////////////////////////////
@@ -119,7 +131,7 @@ public class SimpleGameWorld implements GameWorld {
 		}
 	}
 
-	private void deleteObject(GameObject object) {
+	private void removeObject(GameObject object) {
 		grid.removeObject(object);
 		if (object instanceof DynamicObject) {
 			dynamicObjects.remove(object);
