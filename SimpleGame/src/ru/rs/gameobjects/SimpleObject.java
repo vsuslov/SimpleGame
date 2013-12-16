@@ -1,10 +1,10 @@
 package ru.rs.gameobjects;
 
+import android.graphics.Bitmap;
 import ru.rs.GameObject;
 import ru.rs.Renderable;
 import ru.rs.interfaces.Game;
 import ru.rs.objects.math.Vector;
-import android.graphics.Bitmap;
 
 public abstract class SimpleObject extends GameObject implements Renderable {
 

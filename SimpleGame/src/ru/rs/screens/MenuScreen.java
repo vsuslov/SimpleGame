@@ -1,14 +1,14 @@
 package ru.rs.screens;
 
-import java.util.List;
-
+import android.graphics.Color;
+import android.graphics.Paint;
 import ru.rs.interfaces.Game;
 import ru.rs.interfaces.Graphics;
 import ru.rs.interfaces.Input;
 import ru.rs.interfaces.Input.TouchEvent;
 import ru.rs.objects.Screen;
-import android.graphics.Color;
-import android.graphics.Paint;
+
+import java.util.List;
 
 public class MenuScreen extends Screen {
 	private Input input;

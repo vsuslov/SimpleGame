@@ -1,12 +1,12 @@
 package ru.rs.gameobjects;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ru.rs.GameObject;
 import ru.rs.SimpleGrid;
 import ru.rs.objects.math.Rectangle;
 import ru.rs.objects.math.Vector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SpatialGrid extends SimpleGrid {
 

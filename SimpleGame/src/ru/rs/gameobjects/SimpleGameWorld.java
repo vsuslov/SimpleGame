@@ -1,17 +1,18 @@
 package ru.rs.gameobjects;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.graphics.Color;
 import ru.rs.GameObject;
 import ru.rs.GameWorld;
 import ru.rs.Renderable;
 import ru.rs.Updateable;
 import ru.rs.interfaces.Game;
 import ru.rs.interfaces.Graphics;
+import ru.rs.interfaces.Input;
 import ru.rs.objects.math.Vector;
 import ru.rs.utils.math.FigureUtils;
-import android.graphics.Color;
+
+import java.util.ArrayList;
+import java.util.List;
 //считаю, нужно объектную модель(человечки, здания) 
 //засовывать в грид и оттуда их прорисовывать, а не в гейм ворлде.
 
@@ -109,25 +110,37 @@ public class SimpleGameWorld implements GameWorld {
 		addUnit(Side.ENEMY);
 	}
 
-	// ////////////////////
+    @Override
+    public void touchProccess(List<Input.TouchEvent> touchEvents) {
+          if(!touchEvents.isEmpty()) {
+             for(Input.TouchEvent event:touchEvents) {
+                 Castle castle=staticObjects.get(0);
+
+                 if(event.x<(castle.getPosition().x+castle.width) && event.y>(graphics.getHeight()-(castle.getPosition().y+castle.height))) {
+                    addAllyUnit();
+                 }
+             }
+          }
+    }
+
+    // ////////////////////
 
 	private void drawGrid() {
-		Graphics graphic = game.getGraphics();
 		int cols = grid.getCellsPerRow();
 		int rows = grid.getCellsPerCol();
-		float dH = graphic.getHeight() / rows;
-		float dW = graphic.getWidth() / cols;
+		float dH = graphics.getHeight() / rows;
+		float dW = graphics.getWidth() / cols;
 
 		for (int i = 1; i < rows; i++) {
 			float lineY = i * dH;
-			graphic.drawLine(new Vector(0, lineY),
-					new Vector(graphic.getWidth(), lineY), Color.RED);
+			graphics.drawLine(new Vector(0, lineY),
+					new Vector(graphics.getWidth(), lineY), Color.RED);
 		}
 
 		for (int i = 0; i < cols; i++) {
 			float lineX = i * dW;
-			graphic.drawLine(new Vector(lineX, 0),
-					new Vector(lineX, graphic.getHeight()), Color.BLUE);
+			graphics.drawLine(new Vector(lineX, 0),
+					new Vector(lineX, graphics.getHeight()), Color.BLUE);
 		}
 	}
 
@@ -139,4 +152,4 @@ public class SimpleGameWorld implements GameWorld {
 			staticObjects.remove(object);
 		}
 	}
-}
+  }
