@@ -1,7 +1,6 @@
 package ru.rs.screens;
 
-import java.util.List;
-
+import android.graphics.Color;
 import ru.rs.GameWorld;
 import ru.rs.gameobjects.SimpleGameWorld;
 import ru.rs.interfaces.Game;
@@ -9,7 +8,8 @@ import ru.rs.interfaces.Graphics;
 import ru.rs.interfaces.Input;
 import ru.rs.interfaces.Input.TouchEvent;
 import ru.rs.objects.Screen;
-import android.graphics.Color;
+
+import java.util.List;
 
 public class CollisionScreen extends Screen {
 
@@ -30,14 +30,16 @@ public class CollisionScreen extends Screen {
 	public void update(float delta) {
 		touches = input.getTouchEvents();
 		if (touches.size() > 0) {
-			for (TouchEvent event : touches) {
-				if (event.x < 32 && event.y < 32) {
-					gameWorld.addAllyUnit();
-					gameWorld.addEnemyUnit();
-				}
-
-			}
+            gameWorld.touchProccess(touches);
+//			for (TouchEvent event : touches) {
+//				if (event.x < 32 && event.y < 32) {
+//					gameWorld.addAllyUnit();
+//					gameWorld.addEnemyUnit();
+//				}
+//
+//			}
 		}
+
 		gameWorld.update();
 
 	}

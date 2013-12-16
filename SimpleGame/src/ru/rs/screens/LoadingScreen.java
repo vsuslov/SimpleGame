@@ -1,10 +1,10 @@
 package ru.rs.screens;
 
+import android.graphics.Color;
 import ru.rs.Resources;
 import ru.rs.interfaces.Game;
 import ru.rs.interfaces.Graphics;
 import ru.rs.objects.Screen;
-import android.graphics.Color;
 
 public class LoadingScreen extends Screen {
 
