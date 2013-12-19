@@ -23,6 +23,7 @@ public class SimpleGameWorld implements GameWorld {
 	private Game game;
 	private SpatialGrid grid;
 	private Graphics graphics;
+    private Long lastClicked=0L;
 
 	public SimpleGameWorld(Game game) {
 		this.game = game;
@@ -45,6 +46,7 @@ public class SimpleGameWorld implements GameWorld {
 			for (DynamicObject unit : dynamicObjects) {
 				unit.update();
 				List<GameObject> list = grid.getPotentialColliders(unit);
+
 				for (GameObject collider : list) {
 					if (FigureUtils.overlap(unit.getBounds(),
 							collider.getBounds())) {
@@ -116,10 +118,14 @@ public class SimpleGameWorld implements GameWorld {
              for(Input.TouchEvent event:touchEvents) {
                  Castle castle=staticObjects.get(0);
 
-                 if(event.x<(castle.getPosition().x+castle.width) && event.y>(graphics.getHeight()-(castle.getPosition().y+castle.height))) {
-                    addAllyUnit();
+                 if(event.x<(castle.getPosition().x+castle.width) && event.y>(graphics.getHeight()-(castle.getPosition().y+castle.height)) && (System.currentTimeMillis()-lastClicked)>5000) {
+
+                     addAllyUnit();
+                     lastClicked=System.currentTimeMillis();
                  }
+
              }
+
           }
     }
 
