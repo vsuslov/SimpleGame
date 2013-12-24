@@ -117,8 +117,10 @@ public class SimpleGameWorld implements GameWorld {
           if(!touchEvents.isEmpty()) {
              for(Input.TouchEvent event:touchEvents) {
                  Castle castle=staticObjects.get(0);
+                 Float cX=castle.getPosition().x;
+                 Float cY=castle.getPosition().y;
 
-                 if(event.x<(castle.getPosition().x+castle.width) && event.y>(graphics.getHeight()-(castle.getPosition().y+castle.height)) && (System.currentTimeMillis()-lastClicked)>5000) {
+                 if(event.x<(cX+castle.width) && event.y>(graphics.getHeight()-(cY+castle.height)) && (System.currentTimeMillis()-lastClicked)>5000) {
 
                      addAllyUnit();
                      lastClicked=System.currentTimeMillis();
