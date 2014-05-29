@@ -30,6 +30,7 @@ public class LoadingScreen extends Screen {
 
 		g.drawText("DONE!", g.getWidth() / 2, g.getHeight() / 2, Color.RED);
 		game.setScreen(new CollisionScreen(game));
+
 	}
 
 }

@@ -1,23 +1,22 @@
 package ru.rs.gameobjects;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ru.rs.GameWorld;
-import ru.rs.Renderable;
-import ru.rs.SpatialGrid;
-import ru.rs.Updateable;
+import android.graphics.Color;
+import ru.rs.*;
 import ru.rs.interfaces.Game;
 import ru.rs.interfaces.Graphics;
+import ru.rs.interfaces.Input;
 import ru.rs.objects.math.Vector;
-import android.graphics.Color;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SimpleGameWorld implements GameWorld {
 
 	private List<Renderable> staticObjects;
 	private List<Updateable> dynamicObjects;
 	private Game game;
-	private SpatialGrid grid;
+	private SimpleGrid grid;
+    private Long clickedAt=0L;
 
 	public SimpleGameWorld(Game game) {
 		this.game = game;
@@ -62,13 +61,16 @@ public class SimpleGameWorld implements GameWorld {
 		float w, h;
 		w = game.getGraphics().getWidth();
 		h = game.getGraphics().getHeight();
-		grid = new SpatialGrid(w, h, 6);
+		grid = new SimpleGrid(w, h, 6);
 
 		drawGrid();
 	}
 
 	private void addUnit(Side side) {
-		dynamicObjects.add(new Unit(side, game));
+        if(System.currentTimeMillis()-clickedAt>=1500||clickedAt==0) {
+		    dynamicObjects.add(new Unit(side, game));
+            clickedAt=System.currentTimeMillis();
+        }
 	}
 
 	@Override
@@ -102,4 +104,14 @@ public class SimpleGameWorld implements GameWorld {
 					new Vector(lineX, graphic.getHeight()), Color.BLUE);
 		}
 	}
+
+    public void touch(List<Input.TouchEvent> touches) {
+        if(touches.size()>0) {
+            for(Input.TouchEvent event:touches) {
+                if(event.x<32&&!(event.y<game.getGraphics().getHeight()-32)) {
+                    addAllyUnit();
+                }
+            }
+        }
+    }
 }
