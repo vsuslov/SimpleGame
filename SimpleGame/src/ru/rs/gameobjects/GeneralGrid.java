@@ -1,6 +1,8 @@
 package ru.rs.gameobjects;
 
 import ru.rs.interfaces.Game;
+import ru.rs.objects.math.Rectangle;
+import ru.rs.objects.math.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,15 +39,32 @@ public class GeneralGrid {
      * @param object object to insert
      */
     public void insertObject(SimpleObject object) {
-        int x1=convertX(object.getBounds().lowerLeft.x);
-        int x2=convertX(object.getBounds().lowerLeft.x+object.getBounds().width);
+        int[] cls=getCellIds(object);
 
-        if(x1!=x2) {
-            cells[x2].add(object);
+        for(Integer i:cls) {
+           cells[i].add(object);
         }
-        cells[x1].add(object);
     }
 
+    /**
+     * Method for remove object from grid;
+     * @param object object to delete
+     */
+    public void removeObject(SimpleObject object) {
+         int[] cls=getCellIds(object);
+
+        for(Integer i:cls) {
+            cells[i].remove(object);
+        }
+    }
+
+    /**
+     * Method for clear particular cell
+     * @param cellId id of cell
+     */
+    public void clearCell(int cellId) {
+        cells[cellId].clear();
+    }
     /**
      * Getting X coordinate as integer cell-coordinate
      * @param x double original coordinate
@@ -56,4 +75,19 @@ public class GeneralGrid {
        int result=(int) Math.floor(x/colSize);
        return result;
     }
+
+    private int[] getCellIds(SimpleObject object) {
+        Rectangle bounds = object.getBounds();
+        Vector lowerLeft=bounds.lowerLeft;
+        int x1=convertX(lowerLeft.x);
+        int x2=convertX(lowerLeft.x+bounds.width);
+
+        if(x1!=x2) {
+            int[] result={x1,x2};
+            return result;
+        } else { int[] result={x1};return result;}
+
+
+    }
+
 }
